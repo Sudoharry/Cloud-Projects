@@ -1,0 +1,8 @@
+digraph {
+	bgcolor=white
+	User [label=User fillcolor=lightblue shape=ellipse style=filled]
+	"AWS Lambda" [label="AWS Lambda" fillcolor=lightgray shape=box style=filled]
+	User -> "AWS Lambda"
+	DynamoDB [label=DynamoDB fillcolor=lightgray shape=box style=filled]
+	User -> DynamoDB
+}
