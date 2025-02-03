@@ -12,21 +12,20 @@ pipeline {
     }
 
     stages {
-
-        stages {
+        stage("Workspace cleanup"){
+             steps{
+                script{
+                     cleanWs()
+                      }
+             }
+        }
+        
         stage('Checkout') {
             steps {
                 git branch: 'main', credentialsId: 'git-cred', url: 'https://github.com/Sudoharry/Cloud-Projects.git'
             }
-        }        
-
-        stage("Workspace cleanup") {
-            steps {
-                script {
-                    cleanWs()
-                }
-            }
         }
+    
 
         stage('Compile Python Code') {
             steps {
@@ -36,7 +35,7 @@ pipeline {
             }
         }
 
-        stage('Setup & Test') {
+         stage('Setup & Test') {
             steps {
                 script {
                     // Create virtual environment
@@ -113,8 +112,7 @@ pipeline {
     post {
         always {
             junit '**/test-results.xml'
-            cleanWs()
-        }
+                   }
         success {
             emailext (
                 subject: "Build ${env.BUILD_NUMBER} Succeeded!",
