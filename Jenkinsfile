@@ -13,7 +13,6 @@ pipeline {
 
     stages {
 
-        stages {
         stage('Checkout') {
             steps {
                 git branch: 'main', credentialsId: 'git-cred', url: 'https://github.com/Sudoharry/Cloud-Projects.git'
