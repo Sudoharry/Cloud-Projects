@@ -3,19 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History</title>
+    <title>Past Recommendations</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .history-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .recommendation-card {
+            border-left: 4px solid #007bff;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+    </style>
 </head>
-<body>
-    <h1>Past Recommendations</h1>
-    <ul>
-        {% for recommendation in recommendations %}
-            <li>
-                <strong>Application Type:</strong> {{ recommendation.application_type }}<br>
-                <strong>Traffic:</strong> {{ recommendation.traffic }}<br>
-                <strong>Database Type:</strong> {{ recommendation.database_type }}<br>
-                <strong>Services:</strong> {{ recommendation.services }}<br>
-            </li>
-        {% endfor %}
-    </ul>
+<body class="bg-light">
+
+    <div class="container">
+        <div class="history-container">
+            <h2 class="text-center text-primary mb-4">Past Recommendations</h2>
+            
+            {% if recommendations %}
+                <ul class="list-unstyled">
+                    {% for recommendation in recommendations %}
+                        <li class="recommendation-card">
+                            <p><strong>Application Type:</strong> {{ recommendation.application_type }}</p>
+                            <p><strong>Traffic:</strong> {{ recommendation.traffic }}</p>
+                            <p><strong>Database Type:</strong> {{ recommendation.database_type }}</p>
+                            <p><strong>Recommended Services:</strong></p>
+                            <ul>
+                                {% for service in recommendation.services %}
+                                    <li>✅ {{ service }}</li>
+                                {% endfor %}
+                            </ul>
+                            <p class="text-muted"><small>Generated on: {{ recommendation.timestamp }}</small></p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-center text-muted">No past recommendations available.</p>
+            {% endif %}
+            
+            <div class="text-center mt-3">
+                <a href="/" class="btn btn-secondary">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
