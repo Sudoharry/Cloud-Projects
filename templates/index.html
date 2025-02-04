@@ -11,7 +11,7 @@
             background-color: #f8f9fa;
         }
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin-top: 50px;
         }
         .footer {
@@ -24,62 +24,88 @@
 </head>
 <body>
     <div class="container">
-        <!-- Heading -->
         <h1 class="text-center mb-4">Cloud Solution Recommendation Tool</h1>
 
+        <!-- Error Message -->
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+
         <!-- Form -->
-        <form method="POST" class="bg-white p-4 rounded shadow">
-            <!-- Application Type -->
+        <form method="POST" action="/" class="bg-white p-4 rounded shadow">
             <div class="mb-3">
                 <label for="application_type" class="form-label">Application Type:</label>
-                <select name="application_type" id="application_type" class="form-select">
+                <select name="application_type" id="application_type" class="form-select" required>
                     <option value="Microservices">Microservices</option>
                     <option value="Serverless">Serverless</option>
                     <option value="Monolithic">Monolithic</option>
                 </select>
             </div>
 
-            <!-- Traffic -->
             <div class="mb-3">
                 <label for="traffic" class="form-label">Traffic:</label>
-                <select name="traffic" id="traffic" class="form-select">
+                <select name="traffic" id="traffic" class="form-select" required>
                     <option value="Low">Low</option>
                     <option value="High">High</option>
                 </select>
             </div>
 
-            <!-- Database Type -->
             <div class="mb-3">
                 <label for="database_type" class="form-label">Database Type:</label>
-                <select name="database_type" id="database_type" class="form-select">
+                <select name="database_type" id="database_type" class="form-select" required>
                     <option value="SQL">SQL</option>
                     <option value="NoSQL">NoSQL</option>
                 </select>
             </div>
 
-            <!-- Region -->
             <div class="mb-3">
                 <label for="region" class="form-label">Region:</label>
-                <input type="text" name="region" id="region" class="form-control" placeholder="Enter region (e.g., us-east-1)">
+                <input type="text" name="region" id="region" class="form-control" placeholder="Enter AWS region (e.g., us-east-1)" required>
             </div>
 
-            <!-- Cost Constraint -->
             <div class="mb-3">
                 <label for="cost_constraint" class="form-label">Cost Constraint:</label>
-                <input type="text" name="cost_constraint" id="cost_constraint" class="form-control" placeholder="Enter cost constraint (e.g., $100/month)">
+                <input type="text" name="cost_constraint" id="cost_constraint" class="form-control" placeholder="Enter cost constraint (e.g., $100/month)" required>
             </div>
 
-            <!-- Submit Button -->
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Get Recommendations</button>
             </div>
         </form>
+
+        <!-- Past Recommendations -->
+        {% if past_recommendations %}
+        <h3 class="mt-5">Past Recommendations</h3>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Application Type</th>
+                    <th>Traffic</th>
+                    <th>Database Type</th>
+                    <th>Recommended Services</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rec in past_recommendations %}
+                <tr>
+                    <td>{{ rec[1] }}</td>
+                    <td>{{ rec[2] }}</td>
+                    <td>{{ rec[3] }}</td>
+                    <td>{{ rec[4] }}</td>
+                    <td>{{ rec[5] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Cloud Solution Recommendation Tool. All rights reserved.</p>
+            <p>&copy; 2024 Cloud Solution Recommendation Tool Developed By Harendra Barot. All rights reserved.</p>
         </div>
     </footer>
 </body>
